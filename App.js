@@ -21,6 +21,8 @@ const App = () => {
   const [age, setAge] = useState();
   const [onCreate, setOnCreate] = useState();
 
+  const keyApi = 'GET_YOUR_KEY';
+
   //pegando coordenadas do usuário
   const getLocation = () => {
     Geolocation.getCurrentPosition(
@@ -58,7 +60,7 @@ const App = () => {
       }
     })();
 
-    axios.get('https://inlinetec.com/atp/?operation=view&option=user&key=daccbf21a5d0c6433e09526c7b2c8709')
+    axios.get(`https://inlinetec.com/atp/?operation=view&option=user&key=${keyApi}`)
     .then(e => {
       if(e.data.status == 'VALID_REQUEST'){
         let res = e.data.result[0];
@@ -72,7 +74,7 @@ const App = () => {
     })
 
     //pegando historico
-    axios.get('https://inlinetec.com/atp/?operation=view&option=history&key=daccbf21a5d0c6433e09526c7b2c8709')
+    axios.get(`https://inlinetec.com/atp/?operation=view&option=history&key=${keyApi}`)
     .then(e => {
       if(e.data.status == 'VALID_REQUEST'){
         setDataHistory(e.data.result);
@@ -85,7 +87,7 @@ const App = () => {
 
   //att user
   const updateUser = () =>{
-    axios.get(`https://inlinetec.com/atp/?operation=update&userName=${user}&key=daccbf21a5d0c6433e09526c7b2c8709`)
+    axios.get(`https://inlinetec.com/atp/?operation=update&userName=${user}&key=${keyApi}`)
     .then(()=>{
       ToastAndroid.show('Sucesso ao atualizar dados do perfil', ToastAndroid.SHORT);
     }).catch(()=>{
@@ -95,7 +97,7 @@ const App = () => {
 
   //del historico
   const delHistory = (n) => {
-    axios.get(`https://inlinetec.com/atp/?operation=remove&idAlert=${n}&key=daccbf21a5d0c6433e09526c7b2c8709`)
+    axios.get(`https://inlinetec.com/atp/?operation=remove&idAlert=${n}&key=${keyApi}`)
     .then(()=>{
       ToastAndroid.show('Sucesso ao remover historico, basta atualizar', ToastAndroid.SHORT);
     }).catch(()=>{
@@ -108,7 +110,7 @@ const App = () => {
   //inserindo alerta
   useEffect(()=>{
     if(sendPosition !== ''){
-      axios.get(`https://inlinetec.com/atp/?operation=insert&idUser=${idUser}&geolocation=${sendPosition}&key=daccbf21a5d0c6433e09526c7b2c8709`)
+      axios.get(`https://inlinetec.com/atp/?operation=insert&idUser=${idUser}&geolocation=${sendPosition}&key=${keyApi}`)
       .then(()=>{
         ToastAndroid.show('Alerta foi feito, aguarde retorno das autoridades...', ToastAndroid.SHORT);
         setPosition('');
